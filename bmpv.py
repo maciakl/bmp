@@ -6,8 +6,9 @@
 
 import os
 import re
+import sys
 
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 
 
 def increment_version(file_path, part):
@@ -51,8 +52,7 @@ def increment_version(file_path, part):
     print(f"{file_path} bumped to version {new_version}")
 
 
-if __name__ == "__main__":
-    import sys
+def main():
     if len(sys.argv) != 3:
         print("Usage: bmp <file_path> <major|minor|patch>")
     else:
@@ -61,3 +61,7 @@ if __name__ == "__main__":
             exit(0)
         else:
             increment_version(sys.argv[1], sys.argv[2])
+
+
+if __name__ == "__main__":
+    main()

@@ -1,13 +1,15 @@
 PROJ := "bmp"
-VER := `uv version | busybox awk '{print $NF}'`
+VER := `uv version | awk '{print $NF}'`
 
 all: release
 
 build:
     uv build
+
+pyinstaller: build
     python -m PyInstaller -F {{PROJ}}.py
 
-zip: build
+zip: pyinstaller
     zip -j "dist/{{PROJ}}-{{VER}}-win_x64.zip" dist/{{PROJ}}.exe
 
 hash: zip
@@ -22,5 +24,6 @@ release: hash
     gh release create "v{{VER}}" dist/{{PROJ}}-{{VER}}-win_x64.zip dist/{{PROJ}}-{{VER}}.tar.gz dist/{{PROJ}}-{{VER}}-py3-none-any.whl dist/checksums-{{VER}}.txt --title "v{{VER}}" --generate-notes
 
 bump part:
-    bmp.py {{PROJ}}.py {{part}}
-    bmp.py pyproject.toml {{part}}
+    @echo Current version: {{VER}}
+    bmp {{PROJ}}.py {{part}}
+    uv version --bump {{part}}

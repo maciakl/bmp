@@ -1,7 +1,10 @@
 [project]
-name = "bmp"
-version = "0.1.1"
+name = "bmpv"
+version = "0.1.2"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
+
+[project.scripts]
+bmpv = "bmpv:main"
