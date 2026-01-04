@@ -1,7 +1,8 @@
 PROJ := "bmpv"
 VER := `uv version | awk '{print $NF}'`
+TOKEN := env("UV_PUBLISH_TOKEN")
 
-all: release
+all: publish
 
 build:
     uv build
@@ -22,6 +23,9 @@ release: hash
     git tag -a "v{{VER}}" -m "Release v{{VER}}"
     git push origin "v{{VER}}"
     gh release create "v{{VER}}" dist/{{PROJ}}-{{VER}}-win_x64.zip dist/{{PROJ}}-{{VER}}.tar.gz dist/{{PROJ}}-{{VER}}-py3-none-any.whl dist/checksums-{{VER}}.txt --title "v{{VER}}" --generate-notes
+
+publish: release
+    uv publish --token {{TOKEN}}
 
 bump part:
     @echo Current version: {{VER}}
