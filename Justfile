@@ -1,4 +1,4 @@
-PROJ := "bmpv"
+pro := `uv version | awk '{print $1}'`
 VER := `uv version | awk '{print $NF}'`
 TOKEN := env("UV_PUBLISH_TOKEN")
 
